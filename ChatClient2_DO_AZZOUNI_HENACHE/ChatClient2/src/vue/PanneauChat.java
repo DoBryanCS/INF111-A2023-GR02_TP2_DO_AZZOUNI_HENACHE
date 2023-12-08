@@ -26,6 +26,7 @@ public class PanneauChat extends JPanel {
     }
 
     public void vider() {
-        this.zoneChat.setText("");
+        if (this.zoneChat != null)
+            this.zoneChat.setText("");
     }
 }
