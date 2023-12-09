@@ -19,9 +19,13 @@ public class PanneauChatPrive extends PanneauChat {
 
         bAccepterOuInviter.setActionCommand("ACCEPTER");
         bRefuser.setActionCommand("REFUSER");
+        bRefuser.setVisible(false);
 
-        //à compléter
+        JPanel panelBoutons = new JPanel(new GridLayout(1,2));
+        panelBoutons.add(bAccepterOuInviter);
+        panelBoutons.add(bRefuser);
 
+        this.add(panelBoutons, BorderLayout.NORTH);
     }
     @Override
     public void setEcouteur(ActionListener ecouteur) {
@@ -30,10 +34,12 @@ public class PanneauChatPrive extends PanneauChat {
         bRefuser.addActionListener(ecouteur);
     }
     public void invitationEchecRecue() {
-        //à compléter
+        bAccepterOuInviter.setText("Accepter");
+        bRefuser.setVisible(true);
     }
     public void invitationEchecAnnulee() {
-        //à compléter
+        bAccepterOuInviter.setText("Inviter échec");
+        bRefuser.setVisible(false);
     }
 
     public void setFenetreEchecs(FenetreEchecs fenetreEchecs) {

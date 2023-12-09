@@ -4,6 +4,7 @@ import com.chat.client.ClientChat;
 import controleur.EcouteurChatPrive;
 import controleur.EcouteurChatPublic;
 import controleur.EcouteurListeConnectes;
+import controleur.EcouteurListeInvitations;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,6 +38,9 @@ public class PanneauPrincipal  extends JPanel {
         panneauChatPublic.setEcouteur(ecouteurChatPublic);
 
         panneauInvitations = new PanneauInvitations();
+
+        EcouteurListeInvitations ecouteurListeInvitations = new EcouteurListeInvitations(clientChat, panneauInvitations);
+        panneauInvitations.setEcouteur(ecouteurListeInvitations);
 
         panneauxPrives = new HashMap<>();
 
@@ -114,7 +118,11 @@ public class PanneauPrincipal  extends JPanel {
     public void ajouterMessagePrive(String alias, String msg) {
         String message = alias+">>"+msg;
         System.out.println("PRIVÉ : "+alias+">>"+msg);
-        //à compléter
+
+        PanneauChatPrive panneauChatPrive;
+        panneauChatPrive = panneauxPrives.get(alias);
+        if (panneauChatPrive != null)
+            panneauChatPrive.ajouter(message);
     }
 
     public void inviteEchecs(String alias) {
