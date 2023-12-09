@@ -31,7 +31,8 @@ public class EcouteurChatPrive extends EcouteurChatPublic {
             if ("ACCEPTER".equals(action)) {
                 clientChat.envoyer("CHESS " + alias);
             } else if ("REFUSER".equals(action)) {
-                clientChat.envoyer("DECLINE_CHESS " + alias);
+                clientChat.envoyer("DECLINE " + alias);
+                ((PanneauChatPrive) panneauChat).invitationEchecAnnulee();
             }
         } else {
             texte = ((JTextField)source).getText();
