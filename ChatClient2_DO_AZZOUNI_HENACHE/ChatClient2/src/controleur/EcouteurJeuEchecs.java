@@ -8,15 +8,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class EcouteurJeuEchecs implements ActionListener {
-
     private ClientChat clientChat;
+    private String positionDepart;
 
     public EcouteurJeuEchecs(ClientChat clientChat) {
         this.clientChat = clientChat;
+        this.positionDepart = null;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //à compléter
+        if (positionDepart == null) {
+            positionDepart = e.getActionCommand();
+        } else {
+            String positionFin = e.getActionCommand();
+            // Convertir en format de déplacement du serveur (ex: e2e4)
+            String deplacement = positionDepart + positionFin;
+            clientChat.envoyer("MOVE " + deplacement);
+            positionDepart = null; // Réinitialiser pour le prochain déplacement
+        }
     }
 }

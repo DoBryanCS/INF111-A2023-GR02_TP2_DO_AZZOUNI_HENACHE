@@ -2,6 +2,8 @@ package vue;
 
 import com.chat.echecs.EtatPartieEchecs;
 import controleur.EcouteurJeuEchecs;
+import observer.Observable;
+import observer.Observateur;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +15,7 @@ import java.awt.event.ActionListener;
  * @version 1.0
  * @since 2023-10-01
  */
-public class PanneauEchiquier extends JPanel {
+public class PanneauEchiquier extends JPanel implements Observateur {
     private JButton[][] boutons = new JButton[8][8];
     private EtatPartieEchecs partie;
     private ActionListener ecouteurJeuEchecs;
@@ -32,11 +34,13 @@ public class PanneauEchiquier extends JPanel {
                 else
                     boutons[i][j].setBackground(Color.GRAY);
                 p.add(boutons[i][j]);
-                if (echiquier[i][j]!=' ')
+                if (echiquier[i][j]!=' ') {
                     boutons[i][j].setIcon(ServiceImages.getIconePourPiece(echiquier[i][j]));
+                    System.out.println(ServiceImages.getIconePourPiece(echiquier[i][j]));
+                }
             }
         this.add(p,BorderLayout.CENTER);
-       //partie.ajouterObservateur(this);
+        partie.ajouterObservateur(this);
     }
 
     public void setEcouteurJeuEchecs(ActionListener ecouteurJeuEchecs) {
@@ -44,5 +48,22 @@ public class PanneauEchiquier extends JPanel {
         for (int i=0;i<boutons.length;i++)
             for (int j=0;j<boutons[i].length;j++)
                 boutons[i][j].addActionListener(ecouteurJeuEchecs);
+    }
+
+    @Override
+    public void seMettreAJour(Observable observable) {
+        if (observable instanceof EtatPartieEchecs) {
+            EtatPartieEchecs etat = (EtatPartieEchecs) observable;
+            char[][] echiquier = etat.getEtatEchiquier();
+            for (int i = 0; i < boutons.length; i++) {
+                for (int j = 0; j < boutons[i].length; j++) {
+                    if (echiquier[i][j] == ' ') {
+                        boutons[i][j].setIcon(null);
+                    } else {
+                        boutons[i][j].setIcon(ServiceImages.getIconePourPiece(echiquier[i][j]));
+                    }
+                }
+            }
+        }
     }
 }

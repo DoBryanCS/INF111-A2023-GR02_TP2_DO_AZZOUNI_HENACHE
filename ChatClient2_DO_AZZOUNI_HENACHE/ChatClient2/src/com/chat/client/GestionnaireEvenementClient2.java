@@ -152,7 +152,13 @@ public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
                     System.out.println("Partie d'échecs démarrée avec "+arg+". Votre couleur est : "+str);
                     System.out.println(client.getEtatPartieEchecs());
                     PanneauEchiquier panneauEchiquier = new PanneauEchiquier(client.getEtatPartieEchecs());
-                    //à compléter
+
+                    EcouteurJeuEchecs ecouteur = new EcouteurJeuEchecs(client);
+                    panneauEchiquier.setEcouteurJeuEchecs(ecouteur);
+
+                    String titre = "Vous (" + str + ") contre " + arg;
+                    fenetreEchecs = new FenetreEchecs(panneauEchiquier, titre);
+                    fenetreEchecs.setVisible(true);
 
                     panneauPrincipal.setFenetreEchecs(arg,fenetreEchecs);
                     break;

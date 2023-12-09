@@ -1,12 +1,14 @@
 package com.chat.echecs;
 
+import observer.Observable;
+
 /**
  *
  * @author Abdelmoumène Toudeft (Abdelmoumene.Toudeft@etsmtl.ca)
  * @version 1.0
  * @since 2023-10-01
  */
-public class EtatPartieEchecs {
+public class EtatPartieEchecs extends Observable {
     private char[][] etatEchiquier = new char[8][8];
     public EtatPartieEchecs() {
         //Les pions :
@@ -48,7 +50,39 @@ public class EtatPartieEchecs {
     }
     public boolean move(String deplacement) {
         boolean res = false;
-        //à compléter
+
+        if (deplacement == null || deplacement.length() < 4) {
+            return res;
+        }
+
+        String positionInitiale = deplacement.substring(0, 2);
+        String positionFinale = deplacement.substring(deplacement.length() - 2);
+
+        int colonne1 = positionInitiale.charAt(0) - 'a';
+        int ligne1 = 8 - Integer.parseInt(String.valueOf(positionInitiale.charAt(1)));
+        int colonne2 = positionFinale.charAt(0) - 'a';
+        int ligne2 = 8 - Integer.parseInt(String.valueOf(positionFinale.charAt(1)));
+
+        char piece = etatEchiquier[ligne1][colonne1];
+
+        if (piece == ' ') {
+            return res;
+        }
+
+        etatEchiquier[ligne1][colonne1] = ' ';
+        etatEchiquier[ligne2][colonne2] = piece;
+
+        if (ligne2 == 8 && piece == 'P') {
+            etatEchiquier[ligne2][colonne2] = 'D';
+        }
+
+        if (ligne2 == 1 && piece == 'p') {
+            etatEchiquier[ligne2][colonne2] = 'd';
+        }
+
+        this.notifierObservateurs();
+
+        res = true;
 
         return res;
     }

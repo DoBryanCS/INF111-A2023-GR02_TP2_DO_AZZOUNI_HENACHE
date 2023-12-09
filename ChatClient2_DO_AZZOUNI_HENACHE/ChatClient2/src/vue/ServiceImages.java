@@ -41,7 +41,7 @@ public class ServiceImages {
 		System.out.println("Nom fichier de l'image : "+nomFichier);
 		if (nomFichier==null)
 			return null;
-		return new ImageIcon("imgs/"+nomFichier);
+		return new ImageIcon("ChatClient2_DO_AZZOUNI_HENACHE/ChatClient2/imgs/"+nomFichier);
 	}
 	public static ImageIcon getImage(String nomFichier) {
 		return new ImageIcon("imgs/"+nomFichier);
