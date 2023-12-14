@@ -51,6 +51,7 @@ public class EtatPartieEchecs extends Observable {
     public boolean move(String deplacement) {
         boolean res = false;
 
+        // Vérification de la validité du deplacement déja fait du coté serveur
         if (deplacement == null || deplacement.length() < 4) {
             return res;
         }
